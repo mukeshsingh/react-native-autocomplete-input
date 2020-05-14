@@ -74,11 +74,7 @@ class Autocomplete extends Component {
     /**
      * renders custom TextInput. All props passed to this function.
      */
-    renderTextInput: PropTypes.func,
-    /**
-    * `rowHasChanged` will be used for data objects comparison for dataSource
-    */
-    rowHasChanged: PropTypes.func
+    renderTextInput: PropTypes.func
   };
 
   static defaultProps = {
@@ -88,14 +84,13 @@ class Autocomplete extends Component {
     onStartShouldSetResponderCapture: () => false,
     renderItem: rowData => <Text>{rowData}</Text>,
     renderSeparator: null,
-    renderTextInput: props => <TextInput {...props} />,
-    rowHasChanged: (r1, r2) => r1 !== r2
+    renderTextInput: props => <TextInput selectionColor={'black'} {...props} />
   };
 
   constructor(props) {
     super(props);
 
-    const ds = new ListView.DataSource({ rowHasChanged: props.rowHasChanged });
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = { dataSource: ds.cloneWithRows(props.data) };
     this.resultList = null;
   }
@@ -223,6 +218,7 @@ const iosStyles = {
   },
   input: {
     backgroundColor: 'white',
+    color: '#2895FF',
     height: 40,
     paddingLeft: 3
   },
@@ -238,7 +234,8 @@ const iosStyles = {
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: 'white',
+    backgroundColor: '#2895FF',
+    color: '#2895FF',
     height: 40,
     paddingLeft: 3
   },
